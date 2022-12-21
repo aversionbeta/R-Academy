@@ -30,3 +30,33 @@ filter(flights, dep_delay>60, air_time>30)
 # All flights that departed between midnight and 6 am 
 filter(flights, between(dep_time, 2400, 6000))
 
+arrange(flights, year, month, day)
+
+arrange(flights, desc(arr_delay))
+
+?flights
+
+# Most delayed flights 
+
+arrange(flights, arr_delay)
+
+# Select variables
+
+select(flights, year, month,day)
+
+#Select columns between dates 
+
+select(flights, year:day)
+
+#Change name variable
+
+rename(flights, tail_num = tailnum)
+
+# Move variables to the beginning 
+
+select(flights, time_hour, day, carrier, everything())
+
+select(flights, day, day)
+
+#Variables that contains variable
+select(flights, contains ("TIME"))
