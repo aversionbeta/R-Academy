@@ -1,7 +1,8 @@
 y <- seq(1,10, length.out=5)
 y
-
+install.packages("dplyr")
 install.packages("nycflights13")
+install.packages("ggplot2")
 
 ?flights
 
@@ -60,3 +61,54 @@ select(flights, day, day)
 
 #Variables that contains variable
 select(flights, contains ("TIME"))
+
+#Add more columns with mutate
+flights_sml <- select(flights,year:day,ends_with("delay"),distance, air_time) 
+mutate(flights_sml, 
+       gain = arr_delay - dep_delay,
+       speed = distance / air_time*60)
+
+#Adding more variables with mutate
+mutate(flights_sml, 
+       gain = arr_delay - dep_delay,
+       hours = air_time/60,
+       gain_per_hour = gain / hours)
+
+#Only showing the new columns with Transmute
+transmute(flights_sml, 
+       gain = arr_delay - dep_delay,
+       hours = air_time/60,
+       gain_per_hour = gain / hours)
+
+#Spliting a column into indexes
+transmute(flights,
+          dep_time,
+          dep_time %/%100,
+          dep_time %% 100)
+
+#Using lag() and lead()
+(x<- 1:10)
+lag(x)
+lag(x,2)
+lead(x)
+lead(x,2)
+
+#Using cummulatives and rolling agregates
+(x<- 1:10)
+cumsum(x)
+cummean(x)
+cummin(x)
+cummax(x)
+cumprod(x)
+
+#Using different types of ranks
+y<- c(1,2,2,NA,3,4)
+min_rank(y)
+min_rank(desc(y))
+row_number(y)
+dense_rank(y)
+percent_rank(y)
+cume_dist(y)
+
+(x<- 1:10 + 1:10)
+x
