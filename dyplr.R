@@ -112,3 +112,31 @@ cume_dist(y)
 
 (x<- 1:10 + 1:10)
 x
+
+#Summaries 
+summarize(flights, delay = mean(dep_delay,na.rm = TRUE)) #summarize from table flights, a variable called delay which will be the mean value removing null values 
+
+by_day<-group_by(flights, year,month,day)
+summarize(by_day, delay = mean (dep_delay, na.rm=TRUE))
+
+#Multiple operations with the Pipe
+
+flights %>%
+  group_by(dest)%>%
+  summarise(
+    count = n(),
+    dist = mean (distance,na.rm=TRUE),
+    delay = mean (arr_delay,na.rm=TRUE)
+  )%>%
+  filter(count > 20, dest != "HNL")
+
+flights %>%
+  group_by(year,month,day)%>%
+  summarise(mean = mean(dep_delay, na.rm=TRUE))
+
+not_cancelled <- flights %>%
+  filter(!is.na(dep_delay),!is.na (arr_delay))
+
+not_cancelled%>%
+  group_by(year,month,day)%>%
+  summarise(mean=mean(dep_delay))
