@@ -140,3 +140,82 @@ not_cancelled <- flights %>%
 not_cancelled%>%
   group_by(year,month,day)%>%
   summarise(mean=mean(dep_delay))
+
+delays <- not_cancelled %>%
+  group_by(tailnum) %>%
+  summarise(delay = mean (arr_delay, na.rm = TRUE),
+            n=n())
+
+ggplot(data=delays, mapping = aes(x=n,y=delay)) + 
+  geom_point(alpha=1/10)
+
+delays %>%
+  filter(n>25)%>%
+  ggplot(mapping = aes(x=n, y=delay))+
+  geom_point(alpha=1/10)
+
+install.packages("Lahman")
+
+batting <- as_tibble(Lahman::Batting)
+
+batters<- batting %>%
+  group_by(playerID)%>%
+  summarise(
+    ba= sum(H, na.rm = TRUE) / sum (AB, na.rm = TRUE),
+    ab = sum (AB, na.rm = TRUE)
+  )
+
+batters%>% 
+  filter(ab>100)%>%
+  ggplot(mapping = aes(x=ab,y=ba))+
+    geom_point()+
+    geom_smooth(se=FALSE)
+
+batters%>%
+  arrange(desc(ba))
+
+not_cancelled%>%
+  group_by(year,month,day)%>%
+  summarise(
+    avg_delay = mean(arr_delay),
+    avg_delay2 = mean (arr_delay[arr_delay>0])
+  )
+
+not_cancelled%>%
+  group_by(dest)%>%
+  summarise(distance_sd=sd(distance))%>%
+  arrange(desc(distance_sd))
+
+#When do the first and last flights leave each day? 
+
+not_cancelled%>%
+  group_by(year, month, day)%>%
+  summarise(
+    first = min(dep_time),
+    last = max(dep_time)
+  )
+
+not_cancelled%>%
+  group_by(year, month, day)%>%
+  summarise(
+    first = first(dep_time),
+    last = last(dep_time)
+  )
+
+not_cancelled %>%
+  group_by(dest)%>%
+  summarise(carriers=n_distinct(carrier))%>%
+  arrange(desc(carriers))
+
+not_cancelled%>%
+  count(dest)
+
+#How many flights left before 5 am? 
+
+not_cancelled%>%
+  group_by(year,month,day)%>%
+  summarise(
+    n_early= sum(dep_time<500)
+  )
+
+install.packages("tidyverse")
