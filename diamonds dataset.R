@@ -56,3 +56,14 @@ diamonds2<-diamonds%>%
 
 ggplot(diamonds2,aes(x,y))+
   geom_point(na.rm = TRUE)
+
+diamonds %>%
+  count(cut,color) %>%
+  ggplot(aes(cut,color))+
+    geom_tile(aes(fill=n))
+
+ggplot(diamonds)+
+  geom_point(aes(carat, price))
+
+ggplot(diamonds)+
+  geom_point(aes(carat, price),alpha=1/100)

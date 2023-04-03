@@ -1,6 +1,6 @@
 install.packages('nycflights13')
 data(nycflights13)
-?nycflights2
+?nycflights13
 
 nycflights13::flights%>%
   mutate(
@@ -20,3 +20,8 @@ ggplot(diamonds, aes(price))+
 
 ggplot(diamonds, aes(cut,price))+
   geom_boxplot()
+
+flights%>%
+  avg_delay=mean(arr_delay)%>%
+  ggplot(aes(month,destination))+
+    geom_tile(aes(fill=avg_delay))
