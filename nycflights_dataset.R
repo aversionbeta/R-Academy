@@ -1,4 +1,8 @@
+install.packages("ggplot2")
+install.packages("dbplyr")
 install.packages('nycflights13')
+
+
 data(nycflights13)
 ?nycflights13
 
@@ -25,3 +29,4 @@ flights%>%
   avg_delay=mean(arr_delay)%>%
   ggplot(aes(month,destination))+
     geom_tile(aes(fill=avg_delay))
+    
