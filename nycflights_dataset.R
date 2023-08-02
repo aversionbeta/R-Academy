@@ -1,20 +1,22 @@
-install.packages("ggplot2")
-install.packages("dbplyr")
-install.packages('nycflights13')
-
+library("ggplot2")
+library("dplyr")
+library("dbplyr")
+library('nycflights13')
+library(tidyverse)
 
 data(nycflights13)
 ?flights
+
+nycflights13::flights %>%
+  print(n=10,width=Inf)
+
+nycflights13::flights %>%
+  View()
 
 #DYPLR
 
 y <- seq(1,10, length.out=5)
 y
-install.packages("dplyr")
-install.packages("nycflights13")
-install.packages("ggplot2")
-
-?flights
 
 (jan1 <- filter(flights, month == 1, day == 1))
 
@@ -248,4 +250,11 @@ flights%>%
   avg_delay=mean(arr_delay)%>%
   ggplot(aes(month,destination))+
     geom_tile(aes(fill=avg_delay))
+
+#TIBBLE
+
+
+
+
+
 
