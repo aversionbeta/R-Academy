@@ -2,9 +2,10 @@ library("ggplot2")
 library("dplyr")
 library("dbplyr")
 library('nycflights13')
-library(tidyverse)
+library('tidyverse')
+library('tidyr')
 
-data(nycflights13)
+data(flights)
 ?flights
 
 nycflights13::flights %>%
@@ -251,7 +252,11 @@ flights%>%
   ggplot(aes(month,destination))+
     geom_tile(aes(fill=avg_delay))
 
-#TIBBLE
+#TIDYR
+
+flights%>%
+  gather('year',key="year", value="cases")
+
 
 
 
