@@ -1,3 +1,5 @@
+install.packages("dplyr")
+
 library("ggplot2")
 library("dplyr")
 library("dbplyr")
@@ -257,9 +259,27 @@ flights%>%
 flights%>%
   gather('year',key="year", value="cases")
 
+#MUTATE JOINS
+flights2 <- flights %>%
+  select(year:day,hour,origin,dest,tailnum,carrier)
+flights2
 
+flights2 %>%
+  select(-origin,-dest)%>%
+  left_join(airlines,by="carrier")
+flights2
 
+flights2 %>%
+  select(-origin,-dest)%>%
+  mutate(name= airlines$name[match(carrier, airlines$carrier)])
+flights2
 
+top_dest<-flights %>%
+  count(dest,sort = TRUE)%>%
+  head(10)
+top_dest
 
+flights%>%
+  filter(dest %in% top_dest$dest)
 
 
