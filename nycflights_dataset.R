@@ -5,6 +5,7 @@ library("dplyr")
 library("dbplyr")
 library('nycflights13')
 library('tidyverse')
+library('stringr')
 library('tidyr')
 
 data(flights)
@@ -282,4 +283,22 @@ top_dest
 flights%>%
   filter(dest %in% top_dest$dest)
 
+#Filtering Joins
 
+top_dest <- flights %>%
+    count(dest, sort = TRUE)%>%
+    head(10)
+top_dest
+
+flights %>%
+  filter(dest %in% top_dest$dest)
+
+flights%>%
+  semi_join(top_dest)
+
+flights%>%
+  anti_join(planes, by="tailnum")%>%
+  count(tailnum, sort=TRUE)
+
+x<-c("apple","banana")
+str_view(x,"an.")
