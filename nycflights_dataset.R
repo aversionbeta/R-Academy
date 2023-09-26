@@ -309,3 +309,14 @@ flights%>%
   mutate(
     departure=make_datetime(year,month,day,hour,minute)
   )
+
+flights%>%
+  mutate(minute=minute(dep_time))%>%
+  group_by(minute)%>%
+  summarize(
+    avg_delay=mean(arr_delay,na.rm=TRUE),
+    n=n())%>%
+  ggplot(aes(minute,avg_delay))+
+  geom_line()
+
+Sys.timezone()
