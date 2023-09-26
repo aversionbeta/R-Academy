@@ -7,6 +7,7 @@ library('nycflights13')
 library('tidyverse')
 library('stringr')
 library('tidyr')
+library('lubridate')
 
 data(flights)
 ?flights
@@ -302,3 +303,9 @@ flights%>%
 
 x<-c("apple","banana")
 str_view(x,"an.")
+
+flights%>%
+  select(year,month,day,hour,minute)%>%
+  mutate(
+    departure=make_datetime(year,month,day,hour,minute)
+  )
